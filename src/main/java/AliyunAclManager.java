@@ -165,8 +165,9 @@ public class AliyunAclManager {
             System.out.println("优先级: " + perm.getPriority());
             System.out.println("----------------------------------");
             
-            // 收集被阻止的IP
-            if ("drop".equals(perm.getPolicy())) {
+            // 收集被阻止的IP - 修复策略比较逻辑
+            String policy = perm.getPolicy();
+            if (policy != null && "drop".equalsIgnoreCase(policy.trim())) {
                 blockedIps.add(perm.getSourceCidrIp());
             }
         }
